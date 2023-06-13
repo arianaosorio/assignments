@@ -1,10 +1,9 @@
 """Tests for the cleaning module"""
 import pandas as pd
 
+from life_expectancy.cleaning import DATA_DIR, FILE_PATH, FILE_NAME
 from life_expectancy.cleaning import clean_data
 from . import OUTPUT_DIR
-
-from life_expectancy.cleaning import DATA_DIR, FILE_PATH, FILE_NAME
 
 
 def test_clean_data(pt_life_expectancy_expected):
