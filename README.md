@@ -1,7 +1,6 @@
 # Foundations Learning Path Assignments
 
-[![Python package]
-(https://github.com/arianaosorio/assignments/actions/workflows/python-package.yml/badge.svg?branch=main)](https://github.com/arianaosorio/assignments/actions/workflows/python-package.yml)
+[![Python package](https://github.com/arianaosorio/assignments/actions/workflows/python-package.yml/badge.svg?branch=main)](https://github.com/arianaosorio/assignments/actions/workflows/python-package.yml)
 
 ## Introduction
 
