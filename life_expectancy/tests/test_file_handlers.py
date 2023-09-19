@@ -33,7 +33,7 @@ def test_save_data():
     Run unit test of function `save_data`.
     """
     test_df = pd.DataFrame.from_dict({"col_1": [1, 2, 3], "col_2": [1, 5, 6]})
-    with mock.patch("pandas.DataFrame.to_csv") as to_csv_mock:
+    with mock.patch("life_expectancy.file_handlers.pd.DataFrame.to_csv") as to_csv_mock:
         to_csv_mock.side_effect = print("Mocking saving data")
         save_data(test_df, "output_test.csv", FIXTURES_DIR)
         to_csv_mock.assert_called_with(
