@@ -2,8 +2,8 @@
 Module that contains the main function to run the process.
 """
 
-import os
 import argparse
+import os
 
 import pandas as pd
 
@@ -13,8 +13,10 @@ from life_expectancy.file_handlers import load_data, save_data
 
 
 def main(
-    data_dir_path: str, country: str = "PT", file_path: str = os.path.join(DATA_DIR, "eu_life_expectancy_raw.tsv")
-)-> pd.DataFrame:
+    data_dir_path: str,
+    country: str = "PT",
+    file_path: str = os.path.join(DATA_DIR, "eu_life_expectancy_raw.tsv"),
+) -> pd.DataFrame:
     """
     Loads and clean raw dataset. Saves the cleaned dataset.
 
@@ -36,7 +38,10 @@ if __name__ == "__main__":  # pragma: no cover
         "--country", type=str, default="PT", help="The country code to clean data for"
     )
     parser.add_argument(
-        "--file_path", type=str, default=os.path.join(DATA_DIR, "eu_life_expectancy_raw.tsv"), help="Specify data file path"
+        "--file_path",
+        type=str,
+        default=os.path.join(DATA_DIR, "eu_life_expectancy_raw.tsv"),
+        help="Specify data file path",
     )
     args = parser.parse_args()
     main(DATA_DIR, **vars(args))
