@@ -3,10 +3,8 @@ Module that contains the functions for loading and saving a dataset.
 """
 
 import os
-
-import pandas as pd
-
 from abc import ABC, abstractmethod
+import pandas as pd
 
 
 class FileHandler(ABC):

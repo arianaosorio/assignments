@@ -36,7 +36,7 @@ def main(
         dataset = JSONFileHandler().load_data(file_path)
         clean_dataset = JSONCleaner().clean_data(dataset, country)
         save_data(clean_dataset, f"{country.lower()}_life_expectancy.csv", data_dir_path)
-    
+
     else:
         raise ValueError(f"Unsupported file extension: {extension_file}")
 

@@ -2,11 +2,10 @@
 Module that contains all functions to clean dataset.
 """
 
+from abc import ABC, abstractmethod
+
 import pandas as pd
 from life_expectancy.enums import Country
-from life_expectancy.file_handlers import TSVFileHandler, JSONFileHandler
-
-from abc import ABC, abstractmethod
 
 
 class Cleaner(ABC):
@@ -50,7 +49,7 @@ class JSONCleaner(Cleaner):
     """
     Clean the raw data from JSON file.
     """
-    
+
     def clean_data(self, dataset: pd.DataFrame, country_code: Country) -> pd.DataFrame:
         data = dataset.copy()
 
