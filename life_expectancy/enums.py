@@ -70,4 +70,5 @@ class Country(Enum):
 
     @classmethod
     def get_actual_countries(cls):
+        """Class method that return all the actual countries"""
         return [country.value for country in cls if len(country.value) == 2]

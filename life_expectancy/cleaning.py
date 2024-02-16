@@ -13,7 +13,7 @@ class Cleaner(ABC):
     Abstract Class to define cleaner classes.
     """
     @abstractmethod
-    def clean_data(self, dataset: pd.DataFrame) -> pd.DataFrame:
+    def clean_data(self, dataset: pd.DataFrame, country_code: Country) -> pd.DataFrame:
         """
         Clean the raw data.
         """
