@@ -3,31 +3,59 @@ Module that contains all functions to clean dataset.
 """
 
 import pandas as pd
+from life_expectancy.enums import Country
+from life_expectancy.file_handlers import TSVFileHandler, JSONFileHandler
+
+from abc import ABC, abstractmethod
 
 
-def clean_data(dataset: pd.DataFrame, country: str = "PT") -> pd.DataFrame:
+class Cleaner(ABC):
     """
-    Clean the raw data.
-
-    :param dataset: A pandas dataframe with the data to clean.
-    :param country: The name of country.
-    :returns: A pandas dataframe with the cleaned data.
+    Abstract Class to define cleaner classes.
     """
-    data = dataset.copy()
+    @abstractmethod
+    def clean_data(self, dataset: pd.DataFrame) -> pd.DataFrame:
+        """
+        Clean the raw data.
+        """
 
-    data[["unit", "sex", "age", "region"]] = data["unit,sex,age,geo\\time"].str.split(
-        ",", expand=True
-    )
 
-    data.drop(columns=["unit,sex,age,geo\\time"], inplace=True)
+class TSVCleaner(Cleaner):
+    """
+    Clean the raw data from TSV file.
+    """
 
-    data = pd.melt(data, id_vars=["unit", "sex", "age", "region"], var_name="year")
+    def clean_data(self, dataset: pd.DataFrame, country_code: Country) -> pd.DataFrame:
+        data = dataset.copy()
 
-    data["year"] = data["year"].astype("int")
-    data["value"] = data.value.str.extract(r"(\d+\.\d)").astype("float")
+        data[["unit", "sex", "age", "region"]] = data["unit,sex,age,geo\\time"].str.split(
+            ",", expand=True
+        )
 
-    clean_dataset = data.dropna()
+        data.drop(columns=["unit,sex,age,geo\\time"], inplace=True)
 
-    dataset_output = clean_dataset[clean_dataset.region == country]
+        data = pd.melt(data, id_vars=["unit", "sex", "age", "region"], var_name="year")
 
-    return dataset_output
+        data["year"] = data["year"].astype("int")
+        data["value"] = data.value.str.extract(r"(\d+\.\d)").astype("float")
+
+        clean_dataset = data.dropna()
+
+        dataset_output = clean_dataset[clean_dataset.region == country_code]
+
+        return dataset_output
+
+
+class JSONCleaner(Cleaner):
+    """
+    Clean the raw data from JSON file.
+    """
+    
+    def clean_data(self, dataset: pd.DataFrame, country_code: Country) -> pd.DataFrame:
+        data = dataset.copy()
+
+        data.rename(columns={'country': 'region', 'life_expectancy': 'value'}, inplace=True)
+
+        data = data[data.region == country_code]
+
+        return data

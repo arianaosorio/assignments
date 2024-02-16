@@ -7,15 +7,17 @@ import os
 
 import pandas as pd
 
-from life_expectancy.cleaning import clean_data
+from life_expectancy.cleaning import TSVCleaner, JSONCleaner
 from life_expectancy.constants import DATA_DIR
-from life_expectancy.file_handlers import load_data, save_data
+from life_expectancy.file_handlers import TSVFileHandler, JSONFileHandler
+from life_expectancy.file_handlers import save_data
 
 
 def main(
     data_dir_path: str,
     country: str = "PT",
     file_path: str = os.path.join(DATA_DIR, "eu_life_expectancy_raw.tsv"),
+    extension_file: str = ".tsv"
 ) -> pd.DataFrame:
     """
     Loads and clean raw dataset. Saves the cleaned dataset.
@@ -25,9 +27,18 @@ def main(
     :param country: The name of country.
     :returns: A pandas dataframe with the cleaned data.
     """
-    dataset = load_data(file_path)
-    clean_dataset = clean_data(dataset, country)
-    save_data(clean_dataset, f"{country.lower()}_life_expectancy.csv", data_dir_path)
+    if extension_file == ".tsv":
+        dataset = TSVFileHandler().load_data(file_path)
+        clean_dataset = TSVCleaner().clean_data(dataset, country)
+        save_data(clean_dataset, f"{country.lower()}_life_expectancy.csv", data_dir_path)
+
+    elif extension_file == ".json":
+        dataset = JSONFileHandler().load_data(file_path)
+        clean_dataset = JSONCleaner().clean_data(dataset, country)
+        save_data(clean_dataset, f"{country.lower()}_life_expectancy.csv", data_dir_path)
+    
+    else:
+        raise ValueError(f"Unsupported file extension: {extension_file}")
 
     return clean_dataset
 
@@ -42,6 +53,12 @@ if __name__ == "__main__":  # pragma: no cover
         type=str,
         default=os.path.join(DATA_DIR, "eu_life_expectancy_raw.tsv"),
         help="Specify data file path",
+    )
+    parser.add_argument(
+        "--extension_file",
+        type=str,
+        default=".tsv",
+        help="Specify the type of extension file"
     )
     args = parser.parse_args()
     main(DATA_DIR, **vars(args))
