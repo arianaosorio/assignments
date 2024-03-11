@@ -8,7 +8,7 @@ import pandas as pd
 from life_expectancy.enums import Country
 
 
-class Cleaner(ABC):
+class Cleaner(ABC): # pylint: disable=too-few-public-methods
     """
     Abstract Class to define cleaner classes.
     """
@@ -19,7 +19,7 @@ class Cleaner(ABC):
         """
 
 
-class TSVCleaner(Cleaner):
+class TSVCleaner(Cleaner): # pylint: disable=too-few-public-methods
     """
     Clean the raw data from TSV file.
     """
@@ -45,7 +45,7 @@ class TSVCleaner(Cleaner):
         return dataset_output
 
 
-class JSONCleaner(Cleaner):
+class JSONCleaner(Cleaner): # pylint: disable=too-few-public-methods
     """
     Clean the raw data from JSON file.
     """

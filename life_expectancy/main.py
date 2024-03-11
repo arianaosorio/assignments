@@ -7,9 +7,8 @@ import os
 
 import pandas as pd
 
-from life_expectancy.cleaning import TSVCleaner, JSONCleaner
+from life_expectancy.strategies import TSVStrategy, JSONStrategy
 from life_expectancy.constants import DATA_DIR
-from life_expectancy.file_handlers import TSVFileHandler, JSONFileHandler
 from life_expectancy.file_handlers import save_data
 
 
@@ -27,18 +26,16 @@ def main(
     :param country: The name of country.
     :returns: A pandas dataframe with the cleaned data.
     """
-    if extension_file == ".tsv":
-        dataset = TSVFileHandler().load_data(file_path)
-        clean_dataset = TSVCleaner().clean_data(dataset, country)
-        save_data(clean_dataset, f"{country.lower()}_life_expectancy.csv", data_dir_path)
+    strategies_dict = {
+        '.tsv': TSVStrategy(),
+        '.json': JSONStrategy()
+    }
 
-    elif extension_file == ".json":
-        dataset = JSONFileHandler().load_data(file_path)
-        clean_dataset = JSONCleaner().clean_data(dataset, country)
-        save_data(clean_dataset, f"{country.lower()}_life_expectancy.csv", data_dir_path)
+    strategy = strategies_dict[extension_file]
 
-    else:
-        raise ValueError(f"Unsupported file extension: {extension_file}")
+    dataset = strategy.load_data(file_path)
+    clean_dataset = strategy.clean_data(dataset, country)
+    save_data(clean_dataset, f"{country.lower()}_life_expectancy.csv", data_dir_path)
 
     return clean_dataset
 

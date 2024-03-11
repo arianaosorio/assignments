@@ -7,21 +7,21 @@ from abc import ABC, abstractmethod
 import pandas as pd
 
 
-class FileHandler(ABC):
+class FileHandler(ABC): # pylint: disable=too-few-public-methods
     """
     Abstract Class to define file handlers classes.
     """
     @abstractmethod
     def load_data(self, file_path: str) -> pd.DataFrame:
         """
-        Load the raw data from a file.
-
-        :param file_path: The file path.
-        :returns: A pandas dataframe with the raw data.
+        Load the raw data from a file and return a pandas dataframe.
         """
 
 
-class TSVFileHandler(FileHandler):
+class TSVFileHandler(FileHandler): # pylint: disable=too-few-public-methods
+    """
+    Handler class for TSV files.
+    """
     def load_data(self, file_path: str) -> pd.DataFrame:
         """
         Load the raw data from tsv file.
@@ -32,7 +32,10 @@ class TSVFileHandler(FileHandler):
         return pd.read_csv(file_path, sep="\t")
 
 
-class JSONFileHandler(FileHandler):
+class JSONFileHandler(FileHandler): # pylint: disable=too-few-public-methods
+    """
+    Handler class for JSON files.
+    """
     def load_data(self, file_path: str) -> pd.DataFrame:
         """
         Load the raw data from json file.
