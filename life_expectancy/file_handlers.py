@@ -1,49 +1,9 @@
 """
-Module that contains the functions for loading and saving a dataset.
+Module that contains the functions for saving a dataset.
 """
 
 import os
-from abc import ABC, abstractmethod
 import pandas as pd
-
-
-class FileHandler(ABC): # pylint: disable=too-few-public-methods
-    """
-    Abstract Class to define file handlers classes.
-    """
-    @abstractmethod
-    def load_data(self, file_path: str) -> pd.DataFrame:
-        """
-        Load the raw data from a file and return a pandas dataframe.
-        """
-
-
-class TSVFileHandler(FileHandler): # pylint: disable=too-few-public-methods
-    """
-    Handler class for TSV files.
-    """
-    def load_data(self, file_path: str) -> pd.DataFrame:
-        """
-        Load the raw data from tsv file.
-
-        :param file_path: The file path.
-        :returns: A pandas dataframe with the raw data.
-        """
-        return pd.read_csv(file_path, sep="\t")
-
-
-class JSONFileHandler(FileHandler): # pylint: disable=too-few-public-methods
-    """
-    Handler class for JSON files.
-    """
-    def load_data(self, file_path: str) -> pd.DataFrame:
-        """
-        Load the raw data from json file.
-
-        :param file_path: The file path.
-        :returns: A pandas dataframe with the raw data.
-        """
-        return pd.read_json(file_path)
 
 
 def save_data(dataset: pd.DataFrame, file_name: str, data_dir_path: str) -> None:

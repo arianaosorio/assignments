@@ -7,7 +7,8 @@ from unittest import mock
 
 import pandas as pd
 
-from life_expectancy.file_handlers import TSVFileHandler, save_data
+from life_expectancy.file_handlers import save_data
+from life_expectancy.strategies import TSVStrategy
 
 from . import FIXTURES_DIR
 
@@ -16,7 +17,7 @@ def test_load_data():
     """
     Run unit test of function `load_data`.
     """
-    actual_data = TSVFileHandler().load_data(FIXTURES_DIR / "dummy_dataset.tsv")
+    actual_data = TSVStrategy().load_data(FIXTURES_DIR / "dummy_dataset.tsv")
     expected_data = pd.DataFrame.from_dict(
         {
             "col_1,col_2,col_3": ["1,5,23", "1,5,39", "x1,x2,x3"],
