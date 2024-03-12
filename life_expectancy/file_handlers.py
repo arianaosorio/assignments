@@ -1,22 +1,9 @@
 """
-Module that contains the functions for loading and saving a dataset.
+Module that contains the functions for saving a dataset.
 """
 
 import os
-
 import pandas as pd
-
-
-def load_data(file_path: str) -> pd.DataFrame:
-    """
-    Load the raw data from tsv file.
-
-    :param file_path: The file path.
-    :returns: A pandas dataframe with the raw data.
-    """
-    dataset = pd.read_csv(file_path, sep="\t")
-
-    return dataset
 
 
 def save_data(dataset: pd.DataFrame, file_name: str, data_dir_path: str) -> None:
